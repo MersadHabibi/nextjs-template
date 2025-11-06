@@ -1,16 +1,11 @@
 import { getCookie } from "@/lib/server-utils";
-import {
-  type TEditProfile,
-  type TForgetPassword,
-  type TLogin,
-  type TSendOtp,
-} from "@/types/client/auth/types";
+import { buildUrlWithQuery } from "@/lib/utils";
 import axios, {
   type AxiosInstance,
   type AxiosRequestConfig,
   type AxiosResponse,
 } from "axios";
-import { API_CONFIG, buildUrlWithQuery } from "./api-config";
+import { API_LIST } from "./api-config";
 
 // Token cache for client-side
 let accessTokenCache: string | null = null;
@@ -49,7 +44,7 @@ const getAccessToken = async (): Promise<string | null> => {
 
 // Default configuration for axios
 const axiosConfig: AxiosRequestConfig = {
-  baseURL: API_CONFIG.baseURL,
+  baseURL: API_LIST.baseURL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -99,7 +94,7 @@ axiosClient.interceptors.response.use(
 
         // Request new access token
         const response = await axios.post(
-          buildUrlWithQuery(API_CONFIG.endpoints.client.IAM.refreshToken),
+          buildUrlWithQuery(API_LIST.endpoints.client.IAM.refreshToken),
           {
             refresh_token: await getCookie("refreshToken"),
           },
@@ -197,28 +192,4 @@ export const apiService = {
   delete: <T>(url: string): Promise<AxiosResponse<T>> => {
     return axiosClient.delete(buildUrlWithQuery(url));
   },
-};
-
-// API endpoints
-export const api = {
-  admin: {},
-  client: {
-    IAM: {
-      refreshToken: async () =>
-        apiService.post(API_CONFIG.endpoints.client.IAM.refreshToken, {
-          refresh_token: await getCookie("refreshToken"),
-        }),
-      sendOtp: (data: TSendOtp) =>
-        apiService.post(API_CONFIG.endpoints.client.IAM.sendOtp, data),
-      login: (data: TLogin) =>
-        apiService.post(API_CONFIG.endpoints.client.IAM.login, data),
-      forgetPassword: (data: TForgetPassword) =>
-        apiService.post(API_CONFIG.endpoints.client.IAM.forgetPassword, data),
-      editProfile: (data: TEditProfile) =>
-        apiService.put(API_CONFIG.endpoints.client.IAM.userEditProfile, data),
-      getUserInfo: () =>
-        apiService.get(API_CONFIG.endpoints.client.IAM.userGetInfo),
-    },
-  },
-  // Additional API endpoints can be added here
 };

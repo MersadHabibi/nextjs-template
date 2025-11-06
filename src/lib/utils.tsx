@@ -2,6 +2,7 @@ import { clearTokenCache } from "@/services/axios-client";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { removeCookie } from "./server-utils";
+import { API_LIST } from "@/services/api-config";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -207,3 +208,34 @@ export const formatNumber = (value: string) => {
     ? `${formattedInteger}.${decimalPart}`
     : formattedInteger;
 };
+
+//--------------------------------
+// SERVICE UTILS
+//--------------------------------
+
+// Helper function to build full URL
+export function buildApiUrl(path: string): string {
+  return `${API_LIST.baseURL}${path}`;
+}
+
+// Helper function to handle query parameters
+export function buildQueryString(
+  params: Record<string, string | number | undefined>,
+): string {
+  return Object.entries(params)
+    .filter(([_, value]) => value)
+    .map(
+      ([key, value]) =>
+        `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`,
+    )
+    .join("&");
+}
+
+// Helper function to build URL with query parameters
+export function buildUrlWithQuery(
+  path: string,
+  params?: Record<string, string | number | undefined>,
+): string {
+  const queryString = params ? `?${buildQueryString(params)}` : "";
+  return buildApiUrl(path) + queryString;
+}

@@ -22,11 +22,12 @@ export default function RootLayout({
     <html
       lang="fa"
       dir="rtl"
-      className="!scroll-smooth"
+      className="light"
+      color-scheme="light"
       suppressHydrationWarning>
       <body
         className={cn(
-          "overflow-y-aut o relative mx-0 min-h-dvh overflow-x-hidden !scroll-smooth font-normal !text-text",
+          "text-text! relative mx-0 min-h-dvh overflow-x-hidden overflow-y-auto scroll-smooth! font-normal",
           FIranYekan.className,
           FIranYekan.variable,
         )}>
