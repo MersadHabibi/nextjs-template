@@ -2,7 +2,6 @@ import { cn } from "@/lib/utils";
 import "./globals.css";
 import { FIranYekan } from "@/config/fonts";
 import { type Metadata } from "next";
-import { Toaster } from "react-hot-toast";
 import Providers from "@/providers/providers";
 
 export const metadata: Metadata = {
@@ -12,7 +11,6 @@ export const metadata: Metadata = {
   },
   description: "Next.js Starter Template",
 };
-
 
 export default function RootLayout({
   children,
@@ -33,7 +31,6 @@ export default function RootLayout({
           FIranYekan.variable,
         )}>
         <Providers>{children}</Providers>
-        <Toaster />
       </body>
     </html>
   );
