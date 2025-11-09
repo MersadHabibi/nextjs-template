@@ -150,9 +150,12 @@ export default function Input({
       {label && (
         <label
           htmlFor={inputName}
-          className={cn("block text-sm font-medium", labelProps?.className)}>
+          className={cn(
+            "mb-1.5 block text-sm font-medium",
+            labelProps?.className,
+          )}>
           <span className="text-gray-500 dark:text-gray-400">{label}</span>
-          {required && <span className="text-red!">*</span>}
+          {required && <span className="text-red! mr-1">*</span>}
         </label>
       )}
       <div className="relative w-full">
@@ -161,10 +164,11 @@ export default function Input({
           className={cn(
             defaultClassName,
             sizeClassName[size],
-            inputType === "filled" && "bg-gray-100 dark:bg-gray-700",
+            inputType === "filled" &&
+              "border-none bg-gray-100 dark:bg-gray-700",
             isPasswordType && "pl-10",
             inputProps?.className,
-            error && "border-red! text-red",
+            error && "border-red! placeholder:text-red",
           )}
         />
         {isPasswordType && (
