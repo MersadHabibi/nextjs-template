@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import CalendarModal from "./CalendarModal";
 
 const meta = {
-  title: "Components/Calendar/CalendarModal",
+  title: "Components/CalendarModal",
   component: CalendarModal,
   parameters: {
     layout: "fullscreen",
